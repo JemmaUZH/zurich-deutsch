@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: zurilese
+    runtime: docker
+    repo: https://github.com/JemmaUZH/zurich-deutsch
+    plan: free
+    healthCheckPath: /api/tts/status
+    envVars:
+      - key: JWT_SECRET
+        generateValue: true

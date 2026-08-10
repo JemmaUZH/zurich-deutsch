@@ -1,0 +1,16 @@
+{
+  "name": "zurich-deutsch",
+  "version": "0.1.0",
+  "private": true,
+  "description": "ZüriLese – 通过苏黎世生活故事学习德语 (A2)",
+  "scripts": {
+    "setup": "npm install && npm --prefix server install && npm --prefix client install",
+    "dev": "concurrently -n server,client -c blue,green \"npm --prefix server run dev\" \"npm --prefix client run dev\"",
+    "build": "npm --prefix client run build",
+    "start": "npm --prefix server run start",
+    "share": "npm run build && PORT=4100 npm --prefix server run start"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
