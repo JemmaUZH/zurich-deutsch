@@ -4,7 +4,6 @@
 export const LESSONS = [
   {
     slug: "mit-der-strassenbahn-zur-arbeit",
-    archived: true,
     title: "Mit der Straßenbahn zur Arbeit",
     level: "A2",
     topic: "Alltag",
@@ -249,7 +248,6 @@ export const LESSONS = [
   },
   {
     slug: "einkaufen-auf-dem-wochenmarkt",
-    archived: true,
     title: "Einkaufen auf dem Wochenmarkt",
     level: "A2",
     topic: "Einkaufen",
@@ -564,7 +562,6 @@ export const LESSONS = [
   },
   {
     slug: "ein-sommerabend-am-zurichsee",
-    archived: true,
     title: "Ein Sommerabend am Zürichsee",
     level: "A2",
     topic: "Freizeit",
