@@ -36,6 +36,7 @@ const en = {
     Freundschaft: 'Friendship',
     Tiere: 'Animals',
     Hobby: 'Hobby',
+    Studium: 'Studies',
   },
 
   back: '← Back to library',
