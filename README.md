@@ -21,9 +21,9 @@ The app focuses on the language you actually need in daily life:
 
 ## Screenshots
 
-![Home](/docs/screenshots/home.png)
-![Reader with tap-to-translate](/docs/screenshots/reader.png)
-![Flashcards](/docs/screenshots/flashcards.png)
+![Home – German lessons](/docs/screenshots/home-de.png)
+![Reader with tap-to-translate](/docs/screenshots/reader-de.png)
+![Flashcards](/docs/screenshots/flashcards-de.png)
 
 ## Tech Stack
 
