@@ -303,6 +303,18 @@ a:hover { text-decoration: underline; }
 .level-B2 { background: #d0684f; }
 .level-C1 { background: #b8447d; }
 
+.lang-badge {
+  border-radius: 7px;
+  padding: 2px 7px;
+  font-weight: 800;
+  font-size: 11px;
+  color: var(--primary);
+  background: var(--primary-soft);
+  border: 1px solid transparent;
+}
+
+.lang-badge.lang-en { color: #7a4fd0; background: #efe9fb; }
+
 .progress-dot {
   width: 8px;
   height: 8px;
@@ -445,6 +457,24 @@ a:hover { text-decoration: underline; }
 .reader-word:hover { background: #fdeede; box-shadow: 0 0 0 3px #fdeede; }
 .reader-word.has-vocab { text-decoration: underline; text-decoration-color: #b9cdf0; text-underline-offset: 3px; text-decoration-thickness: 2px; }
 .reader-word.saved { background: var(--green-soft); }
+
+.reader-word.hard-word {
+  text-decoration: underline wavy var(--sunset);
+  text-underline-offset: 4px;
+  text-decoration-thickness: 2px;
+}
+
+.hard-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #b4511f;
+  background: var(--sunset-soft);
+  border-radius: 7px;
+  padding: 2px 7px;
+  white-space: nowrap;
+}
 
 .popover {
   position: fixed;

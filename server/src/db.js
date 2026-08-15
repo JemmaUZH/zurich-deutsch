@@ -29,6 +29,7 @@ db.exec(`
     emoji TEXT,
     description TEXT NOT NULL,
     description_en TEXT NOT NULL DEFAULT '',
+    language TEXT NOT NULL DEFAULT 'de',
     content_json TEXT NOT NULL,
     vocab_json TEXT NOT NULL,
     quiz_json TEXT NOT NULL,
@@ -90,6 +91,9 @@ db.exec(
 const lessonCols = db.prepare(`PRAGMA table_info(lessons)`).all().map((c) => c.name);
 if (!lessonCols.includes('description_en')) {
   db.exec(`ALTER TABLE lessons ADD COLUMN description_en TEXT NOT NULL DEFAULT ''`);
+}
+if (!lessonCols.includes('language')) {
+  db.exec(`ALTER TABLE lessons ADD COLUMN language TEXT NOT NULL DEFAULT 'de'`);
 }
 
 export const nowIso = () => new Date().toISOString();

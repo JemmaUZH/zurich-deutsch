@@ -20,10 +20,11 @@ if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
   window.speechSynthesis.onvoiceschanged = refreshVoices;
 }
 
-function germanVoice() {
+function pickVoice(lang) {
+  const want = lang === 'en' ? 'en' : 'de';
   return (
-    voicesCache.find((v) => v.lang === 'de-DE') ||
-    voicesCache.find((v) => v.lang.startsWith('de')) ||
+    voicesCache.find((v) => v.lang.startsWith(want) && (v.lang.includes('-DE') || v.lang.includes('-GB') || v.lang.includes('-US'))) ||
+    voicesCache.find((v) => v.lang.startsWith(want)) ||
     null
   );
 }
@@ -68,11 +69,11 @@ export function stopSpeech() {
   if ('speechSynthesis' in window) window.speechSynthesis.cancel();
 }
 
-async function fetchAudio(path, text, rate) {
+async function fetchAudio(path, text, rate, lang) {
   const res = await fetch(path, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ text, rate }),
+    body: JSON.stringify({ text, rate, lang }),
   });
   if (!res.ok) return null;
   const blob = await res.blob();
@@ -110,7 +111,7 @@ function playBlob(blob, id, finish) {
   );
 }
 
-function browserSpeak(text, rate, id, finish) {
+function browserSpeak(text, rate, lang, id, finish) {
   if (!('speechSynthesis' in window)) {
     finish();
     return;
@@ -118,7 +119,7 @@ function browserSpeak(text, rate, id, finish) {
   const u = new SpeechSynthesisUtterance(text);
   u.lang = 'de-DE';
   u.rate = rate;
-  const voice = germanVoice();
+  const voice = pickVoice(lang);
   if (voice) u.voice = voice;
   u.onend = () => {
     if (id === session) {
@@ -137,7 +138,7 @@ function browserSpeak(text, rate, id, finish) {
   window.speechSynthesis.speak(u);
 }
 
-export async function speak(text, { rate = 1, onEnd } = {}) {
+export async function speak(text, { rate = 1, lang = 'de', onEnd } = {}) {
   if (!text) {
     onEnd?.();
     return;
@@ -161,7 +162,7 @@ export async function speak(text, { rate = 1, onEnd } = {}) {
   for (const engine of order) {
     if (engine === 'edge' && engineStatus.edge) {
       try {
-        const blob = await fetchAudio('/api/tts/edge', text, rate);
+        const blob = await fetchAudio('/api/tts/edge', text, rate, lang);
         if (blob && id === session) {
           if (await playBlob(blob, id, finish)) return;
         }
@@ -171,7 +172,7 @@ export async function speak(text, { rate = 1, onEnd } = {}) {
     }
     if (engine === 'openai' && engineStatus.openai) {
       try {
-        const blob = await fetchAudio('/api/tts/openai', text, rate);
+        const blob = await fetchAudio('/api/tts/openai', text, rate, lang);
         if (blob && id === session) {
           if (await playBlob(blob, id, finish)) return;
         }
@@ -180,7 +181,7 @@ export async function speak(text, { rate = 1, onEnd } = {}) {
       }
     }
     if (engine === 'browser') {
-      browserSpeak(text, rate, id, finish);
+      browserSpeak(text, rate, lang, id, finish);
       return;
     }
   }

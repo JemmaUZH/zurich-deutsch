@@ -18,7 +18,7 @@ import { tokenize, normalizeWord, buildVocabMap, lookupToken } from '../utils.js
 function splitSentences(paragraphs) {
   const out = [];
   paragraphs.forEach((text, pIdx) => {
-    const parts = text.match(/[^.!?]+[.!?]+»?,?|[^.!?]+$/g) || [text];
+    const parts = text.match(/[^.!?]+[.!?]+(»|”)?,?|[^.!?]+$/g) || [text];
     parts.forEach((s) => out.push({ text: s.trim(), pIdx, index: out.length }));
   });
   return out;
@@ -57,6 +57,10 @@ function buildSentenceTokens(sentenceText, { wordMap, phraseMap }) {
     });
   }
   return out;
+}
+
+function ttsText(sentenceText) {
+  return sentenceText.replace(/^[A-ZÄÖÜ][A-Za-zÄÖÜäöüß-]{1,24}:\s*/, '');
 }
 
 /* ---------- Quiz ---------- */
@@ -232,8 +236,9 @@ export default function Lesson() {
     stopSpeech();
     playingRef.current = true;
     setPlayingIndex(index);
-    speak(sentences[index].text, {
+    speak(ttsText(sentences[index].text), {
       rate: rateRef.current,
+      lang: lesson.language || 'de',
       onEnd: () => {
         if (!playingRef.current) return;
         if (index + 1 < sentences.length) {
@@ -382,7 +387,7 @@ export default function Lesson() {
                     ) : (
                       <span
                         key={i}
-                        className={`reader-word${t.entry ? ' has-vocab' : ''}${isSaved(t) ? ' saved' : ''}`}
+                        className={`reader-word${t.entry ? ' has-vocab' : ''}${isSaved(t) ? ' saved' : ''}${t.entry?.hard ? ' hard-word' : ''}`}
                         onClick={(e) => {
                           e.stopPropagation();
                           openPopover(e, t);
@@ -391,6 +396,7 @@ export default function Lesson() {
                       >
                         {t.value}
                         {t.spaceAfter ? ' ' : ''}
+                        {t.entry?.hard ? '★' : ''}
                       </span>
                     )
                   )}
@@ -426,7 +432,7 @@ export default function Lesson() {
               <li key={v.lemma}>
                 <button
                   className="btn btn-ghost btn-sm"
-                  onClick={() => speak(v.word, { rate: 0.9 })}
+                  onClick={() => speak(v.word, { rate: 0.9, lang: lesson.language || 'de' })}
                   title="朗读"
                   style={{ padding: '2px 8px' }}
                 >
@@ -438,6 +444,7 @@ export default function Lesson() {
                     {lang === 'en' ? v.translationEn || v.translation : v.translation}
                   </span>
                 </div>
+                {v.hard && <span className="hard-badge">★ {t('hardBadge')}</span>}
                 <span style={{ fontSize: 12, color: 'var(--muted)' }}>{v.partOfSpeech}</span>
               </li>
             ))}
@@ -454,6 +461,7 @@ export default function Lesson() {
               {popover.token.entry?.partOfSpeech && (
                 <span className="popover-pos">{popover.token.entry.partOfSpeech}</span>
               )}
+              {popover.token.entry?.hard && <span className="hard-badge">★ {t('hardBadge')}</span>}
             </div>
             <div className="popover-trans">
               {lang === 'en'
@@ -468,7 +476,7 @@ export default function Lesson() {
             <div className="popover-actions">
               <button
                 className="btn btn-sm"
-                onClick={() => speak(popover.token.value, { rate: 0.9 })}
+                onClick={() => speak(popover.token.value, { rate: 0.9, lang: lesson.language || 'de' })}
               >
                 {t('listen')}
               </button>

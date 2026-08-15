@@ -20,6 +20,8 @@ const en = {
   statDue: 'Words due',
   lessonTitle: 'Reading lessons',
   all: 'All',
+  moduleDe: 'Deutsch',
+  moduleEn: 'English',
   wordCount: '{n} words',
   completed: 'Completed',
   bestScore: 'Best {n} pts',
@@ -37,6 +39,9 @@ const en = {
     Tiere: 'Animals',
     Hobby: 'Hobby',
     Studium: 'Studies',
+    Wohnen: 'Housing',
+    Gesundheit: 'Health',
+    Nachbarschaft: 'Neighbourhood',
   },
 
   back: '← Back to library',
@@ -114,6 +119,8 @@ const en = {
   removeWord: 'Remove word',
   removedToast: 'Removed',
   noWordsYet: 'No words yet',
+
+  hardBadge: 'Hard',
 
   grammarTitle: 'Grammar reference',
 };

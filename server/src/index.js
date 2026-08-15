@@ -46,8 +46,8 @@ app.use(express.json());
 function seedLessons() {
   const activeLessons = LESSONS.filter((l) => !l.archived);
   const insert = db.prepare(`
-    INSERT INTO lessons (slug, title, level, topic, emoji, description, description_en, content_json, vocab_json, quiz_json, word_count)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO lessons (slug, title, level, topic, emoji, description, description_en, language, content_json, vocab_json, quiz_json, word_count)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ON CONFLICT(slug) DO UPDATE SET
       title = excluded.title,
       level = excluded.level,
@@ -55,6 +55,7 @@ function seedLessons() {
       emoji = excluded.emoji,
       description = excluded.description,
       description_en = excluded.description_en,
+      language = excluded.language,
       content_json = excluded.content_json,
       vocab_json = excluded.vocab_json,
       quiz_json = excluded.quiz_json,
@@ -70,6 +71,7 @@ function seedLessons() {
       l.emoji || '',
       l.description,
       l.descriptionEn || '',
+      l.language || 'de',
       JSON.stringify(l.content),
       JSON.stringify(l.vocab),
       JSON.stringify(l.quiz),
@@ -135,6 +137,7 @@ function publicLesson(row, userId) {
     emoji: row.emoji,
     description: row.description,
     descriptionEn: row.description_en,
+    language: row.language || 'de',
     wordCount: row.word_count,
   };
 }
@@ -247,6 +250,7 @@ app.get('/api/lessons/:id', auth, (req, res) => {
     emoji: row.emoji,
     description: row.description,
     descriptionEn: row.description_en,
+    language: row.language || 'de',
     wordCount: row.word_count,
     content: JSON.parse(row.content_json),
     vocab: JSON.parse(row.vocab_json),
@@ -459,9 +463,10 @@ app.get('/api/tts/status', (req, res) => {
 
 // 免费高质量语音：Microsoft Edge 神经网络德语声音（无需 key）
 app.post('/api/tts/edge', async (req, res) => {
-  const { text, rate = 1 } = req.body || {};
+  const { text, rate = 1, lang = 'de' } = req.body || {};
   if (!text) return res.status(400).json({ error: '缺少朗读文本' });
-  const key = ttsCacheKey('edge', text, rate, 'de-DE-KatjaNeural');
+  const voice = lang === 'en' ? 'en-GB-SoniaNeural' : 'de-DE-KatjaNeural';
+  const key = ttsCacheKey('edge', text, rate, voice);
   const cached = ttsCacheGet(key);
   if (cached) {
     res.set('Content-Type', 'audio/mpeg');
@@ -475,7 +480,7 @@ app.post('/api/tts/edge', async (req, res) => {
   const tts = new MsEdgeTTS();
   try {
     await tts.setMetadata(
-      'de-DE-KatjaNeural',
+      voice,
       OUTPUT_FORMAT.AUDIO_24KHZ_96KBITRATE_MONO_MP3
     );
     const { audioStream } = tts.toStream(safeText, {
@@ -503,12 +508,13 @@ app.post('/api/tts/edge', async (req, res) => {
 
 // 可选高质量语音：OpenAI TTS（需要 OPENAI_API_KEY）
 app.post('/api/tts/openai', async (req, res) => {
-  const { text, rate = 1 } = req.body || {};
+  const { text, rate = 1, lang = 'de' } = req.body || {};
   if (!text) return res.status(400).json({ error: '缺少朗读文本' });
   if (!process.env.OPENAI_API_KEY) {
     return res.status(501).json({ error: '未配置 OPENAI_API_KEY' });
   }
-  const key = ttsCacheKey('openai', text, rate, 'nova');
+  const voice = lang === 'en' ? 'alloy' : 'nova';
+  const key = ttsCacheKey('openai', text, rate, voice);
   const cached = ttsCacheGet(key);
   if (cached) {
     res.set('Content-Type', 'audio/mpeg');
@@ -524,7 +530,7 @@ app.post('/api/tts/openai', async (req, res) => {
       },
       body: JSON.stringify({
         model: 'gpt-4o-mini-tts',
-        voice: 'nova',
+        voice,
         input: text,
         speed: Math.min(2, Math.max(0.5, Number(rate) || 1)),
         instructions: 'Sprich natürlich, deutlich und freundlich auf Hochdeutsch.',

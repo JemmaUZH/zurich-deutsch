@@ -10,6 +10,7 @@ export default function Home() {
   const [lessons, setLessons] = useState([]);
   const [stats, setStats] = useState(null);
   const [level, setLevel] = useState('all');
+  const [module, setModule] = useState('all');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -23,7 +24,11 @@ export default function Home() {
 
   if (loading) return <div className="spinner">{t('loading')}</div>;
 
-  const filtered = level === 'all' ? lessons : lessons.filter((l) => l.level === level);
+  const filtered = lessons.filter(
+    (l) =>
+      (level === 'all' || l.level === level) &&
+      (module === 'all' || (l.language || 'de') === module)
+  );
 
   return (
     <div className="page">
@@ -53,6 +58,17 @@ export default function Home() {
       <div className="section-title">
         <h2>{t('lessonTitle')}</h2>
         <div className="filters">
+          <button className={`chip${module === 'all' ? ' active' : ''}`} onClick={() => setModule('all')}>
+            {t('all')}
+          </button>
+          <button className={`chip${module === 'de' ? ' active' : ''}`} onClick={() => setModule('de')}>
+            {t('moduleDe')}
+          </button>
+          <button className={`chip${module === 'en' ? ' active' : ''}`} onClick={() => setModule('en')}>
+            {t('moduleEn')}
+          </button>
+        </div>
+        <div className="filters">
           {LEVELS.map((l) => (
             <button
               key={l}
@@ -74,6 +90,9 @@ export default function Home() {
             </div>
             <p>{lang === 'en' ? lesson.descriptionEn || lesson.description : lesson.description}</p>
             <div className="lesson-meta">
+              <span className={`lang-badge${(lesson.language || 'de') === 'en' ? ' lang-en' : ''}`}>
+                {(lesson.language || 'de') === 'en' ? 'EN' : 'DE'}
+              </span>
               <span className={`level-badge level-${lesson.level}`}>{lesson.level}</span>
               <span>{topicLabel(lesson.topic, lang)}</span>
               <span>·</span>
