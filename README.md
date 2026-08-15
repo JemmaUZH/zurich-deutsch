@@ -8,8 +8,16 @@ real-life stories and conversations set in Zurich.
 The app focuses on the language you actually need in daily life:
 
 - **Daily German** — shopping, commuting, flat-hunting, small talk
-- **Swiss German** — the words locals really use (Badi, Velo, Zmorge, Merci…)
+  - „Ich hätte gern ein Kilo Tomaten.“ — *I'd like a kilo of tomatoes.*
+  - „Wo ist der Hörsaal HG F 1?“ — *Where is lecture hall HG F 1?*
+  - „Die Kaution bekommst du zurück, wenn du ausziehst.“ — *You get the deposit back when you move out.*
+- **Swiss German** — the words locals really use
+  - „Grüezi, wie gaht's?“ — *Hello, how are you?*
+  - „Merci vielmal!“ — *Thanks a lot!*
+  - Badi, Velo, Zmorge, Znüni, Hoi
 - **English** — everyday conversations, from doctor visits to neighbour chats
+  - „I think I have rhinitis.“
+  - „What breed is she? She is a greyhound.“
 
 ## Screenshots
 
