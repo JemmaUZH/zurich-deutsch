@@ -117,7 +117,7 @@ function browserSpeak(text, rate, lang, id, finish) {
     return;
   }
   const u = new SpeechSynthesisUtterance(text);
-  u.lang = 'de-DE';
+  u.lang = lang === 'en' ? 'en-GB' : 'de-DE';
   u.rate = rate;
   const voice = pickVoice(lang);
   if (voice) u.voice = voice;

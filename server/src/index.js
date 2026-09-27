@@ -465,7 +465,7 @@ app.get('/api/tts/status', (req, res) => {
 app.post('/api/tts/edge', async (req, res) => {
   const { text, rate = 1, lang = 'de' } = req.body || {};
   if (!text) return res.status(400).json({ error: '缺少朗读文本' });
-  const voice = lang === 'en' ? 'en-GB-SoniaNeural' : 'de-DE-KatjaNeural';
+  const voice = lang === 'en' ? 'en-GB-SoniaNeural' : 'de-DE-ConradNeural';
   const key = ttsCacheKey('edge', text, rate, voice);
   const cached = ttsCacheGet(key);
   if (cached) {

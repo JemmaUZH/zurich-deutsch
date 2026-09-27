@@ -1,11 +1,15 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { useI18n } from '../i18n.jsx';
 
 export default function Nav() {
   const { t } = useI18n();
+  const location = useLocation();
+  const homeTheme = location.pathname === '/' ? localStorage.getItem('zurich_theme') || 'system' : null;
+
+  if (location.pathname === '/' || location.pathname.startsWith('/module-1/')) return null;
 
   return (
-    <header className="topbar">
+    <header className={`topbar${homeTheme ? ` trail-topbar trail-topbar-${homeTheme}` : ''}`}>
       <div className="topbar-inner">
         <NavLink to="/" className="brand">
           <span className="brand-mark">Zü</span>
