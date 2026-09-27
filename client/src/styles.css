@@ -609,6 +609,10 @@ details.trail-step { display: block; }
 .lesson-flow-phrase-card { margin: 22px 0 18px; padding: 20px 17px; border-radius: 14px; background: var(--flow-green-soft); }
 .lesson-flow-phrase-card p, .lesson-flow-prompt { margin: 0 0 16px; color: var(--flow-ink); font-size: 20px; font-weight: 700; line-height: 1.45; }
 .lesson-flow-translation { margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--flow-line); color: var(--flow-muted); font-size: 13px; line-height: 1.5; }
+.lesson-flow-variations { display: grid; gap: 8px; margin: 14px 0 18px; }
+.lesson-flow-variations button { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; padding: 10px 12px; border: 1px solid var(--flow-line); border-radius: 10px; background: transparent; color: var(--flow-ink); text-align: left; font: 600 13px/1.4 var(--sans); cursor: pointer; }
+.lesson-flow-variations button:hover { border-color: var(--flow-green); background: var(--flow-green-soft); }
+.lesson-flow-variations small { color: var(--flow-green); font-size: 11px; }
 .lesson-flow-listen { display: inline-flex; align-items: center; gap: 6px; min-height: 34px; padding: 7px 11px; border: 1px solid var(--flow-line); border-radius: 999px; background: var(--flow-surface); color: var(--flow-green); font: 700 12px var(--sans); cursor: pointer; }
 .lesson-flow-listen:hover, .lesson-flow-listen.active { background: var(--flow-green); color: var(--flow-surface); }
 .lesson-flow-note { margin: 16px 0 22px; color: var(--flow-muted); font-size: 13px; line-height: 1.55; }
@@ -617,6 +621,13 @@ details.trail-step { display: block; }
 .lesson-flow-options button { width: 100%; padding: 13px 14px; border: 1px solid var(--flow-line); border-radius: 12px; background: transparent; color: var(--flow-ink); text-align: left; font: 600 13px/1.45 var(--sans); cursor: pointer; }
 .lesson-flow-options button:hover { border-color: var(--flow-green); background: var(--flow-green-soft); }
 .lesson-flow-options button.selected { border-color: var(--flow-green); background: var(--flow-green-soft); }
+.lesson-flow-options button small { display: block; margin-top: 3px; color: var(--flow-muted); font-size: 11.5px; font-weight: 400; }
+.lesson-flow-labels { display: grid; gap: 9px; margin: 20px 0 16px; }
+.lesson-flow-labels button { display: grid; gap: 9px; width: 100%; padding: 13px; border: 1px solid var(--flow-line); border-radius: 12px; background: var(--flow-surface); color: var(--flow-ink); text-align: left; cursor: pointer; }
+.lesson-flow-labels button:hover, .lesson-flow-labels button.selected { border-color: var(--flow-green); background: var(--flow-green-soft); }
+.lesson-flow-labels button > span { display: grid; gap: 2px; padding: 10px 12px; border-radius: 8px; background: rgba(232, 139, 62, .12); color: var(--flow-ink); font: 800 14px/1.25 var(--sans); }
+.lesson-flow-labels button > span b { display: block; }
+.lesson-flow-labels small { color: var(--flow-muted); font-size: 12px; line-height: 1.4; }
 .lesson-flow-feedback { margin: 10px 0 17px; font-size: 13px; line-height: 1.5; }
 .lesson-flow-feedback.good { color: var(--flow-green); }
 .lesson-flow-feedback.try { color: var(--flow-gold); }
@@ -643,6 +654,16 @@ details.trail-step { display: block; }
 .lesson-flow-task-done { display: inline-block; margin-top: 2px; color: var(--flow-green); font-size: 13px; font-weight: 700; }
 .lesson-flow-back { display: block; margin-top: 24px; color: var(--flow-muted); font-size: 13px; font-weight: 600; }
 .lesson-flow-back:hover { color: var(--flow-ink); }
+.mission-flow-mark { background: var(--flow-gold-soft); color: var(--flow-gold); }
+.mission-flow-list { display: grid; gap: 8px; margin: 22px 0 24px; }
+.mission-flow-task { display: flex; align-items: flex-start; gap: 11px; width: 100%; padding: 11px 12px; border: 1px solid var(--flow-line); border-radius: 12px; background: transparent; color: var(--flow-ink); text-align: left; cursor: pointer; }
+.mission-flow-task:hover, .mission-flow-task.checked { border-color: var(--flow-green); background: var(--flow-green-soft); }
+.mission-flow-check { display: grid; place-items: center; width: 24px; height: 24px; flex: 0 0 24px; border: 1px solid var(--flow-line); border-radius: 50%; color: var(--flow-muted); font-size: 12px; font-weight: 800; }
+.mission-flow-task.checked .mission-flow-check { border-color: var(--flow-green); background: var(--flow-green); color: var(--flow-surface); }
+.mission-flow-task > span:last-child { display: grid; gap: 3px; }
+.mission-flow-task strong { font-size: 13.5px; }
+.mission-flow-task small { color: var(--flow-muted); font-size: 12px; line-height: 1.4; }
+.lesson-flow-primary:disabled { opacity: .45; cursor: not-allowed; transform: none; }
 
 @media (max-width: 340px) {
   .lesson-flow-card { padding-left: 18px; padding-right: 18px; }

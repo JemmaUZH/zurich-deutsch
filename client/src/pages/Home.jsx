@@ -110,7 +110,7 @@ export default function Home() {
         <div className="trail-list" aria-label="Migros and Coop lessons">
           {TRAIL_ITEMS.map((item, index) => <div key={item.id}><TrailNode item={item} progress={progress} />{index < TRAIL_ITEMS.length - 1 && <TrailConnector mirror={index % 2 === 1} />}</div>)}
         </div>
-        <p className="trail-footnote"><strong>About 20–25 minutes total.</strong></p>
+        <p className="trail-footnote"><strong>About 30 minutes + one real-world mission.</strong></p>
       </main>
     </div>
   </div>;

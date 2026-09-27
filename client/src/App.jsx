@@ -9,6 +9,7 @@ import Grammar from './pages/Grammar.jsx';
 import Mission from './pages/Mission.jsx';
 import FindingProducts from './pages/FindingProducts.jsx';
 import ModuleLesson from './pages/ModuleLesson.jsx';
+import MigrosMission from './pages/MigrosMission.jsx';
 
 export default function App() {
   return (
@@ -26,7 +27,7 @@ export default function App() {
           <Route path="/module-1/checkout" element={<ModuleLesson />} />
           <Route path="/module-1/cumulus-supercard" element={<ModuleLesson />} />
           <Route path="/module-1/fruit-bags-receipts" element={<ModuleLesson />} />
-          <Route path="/module-1/mission" element={<ModuleLesson />} />
+          <Route path="/module-1/mission" element={<MigrosMission />} />
           <Route path="/module-1/discounts-aktion" element={<Navigate to="/module-1/aktion-price-tags" replace />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
