@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Link, Navigate, useParams } from 'react-router-dom';
+import { Link, Navigate, useLocation, useParams } from 'react-router-dom';
 import { detectTtsEngines, speak, stopSpeech } from '../speech.js';
 import { completeModule1Lesson, completeModule1Mission, readModule1Progress } from '../data/module1.js';
 
@@ -156,12 +156,22 @@ const LESSONS = {
   },
 };
 
+const LESSON_PATHS = {
+  '/module-1/aktion-price-tags': 'aktion-price-tags',
+  '/module-1/checkout': 'checkout',
+  '/module-1/cumulus-supercard': 'cumulus-supercard',
+  '/module-1/fruit-bags-receipts': 'fruit-bags-receipts',
+  '/module-1/mission': 'mission',
+};
+
 function ListenButton({ onClick, label = 'Listen' }) {
   return <button className="lesson-flow-listen" type="button" onClick={onClick}><span aria-hidden="true">▶</span> {label}</button>;
 }
 
 export default function ModuleLesson() {
-  const { slug } = useParams();
+  const { slug: paramSlug } = useParams();
+  const location = useLocation();
+  const slug = paramSlug || LESSON_PATHS[location.pathname];
   const lesson = LESSONS[slug];
   if (!lesson) return <Navigate to="/" replace />;
   const [step, setStep] = useState(0);
